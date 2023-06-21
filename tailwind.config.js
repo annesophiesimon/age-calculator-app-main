@@ -3,7 +3,14 @@ module.exports = {
   content: ['./index.html'],
   theme: {
     fontFamily: {
-      'serif': ['Leckerli One']
+      'poppins-r': ['Poppins-regular', 'sans-serif'],
+      'poppins-b': ['Poppins-bold'],
+      'poppins-bi': ['Poppins-bolditalic'],
+      'poppins-eb': ['Poppins-extrabold'],
+      'poppins-ebi': ['Poppins-extrabolditalic']
+
+
+
     },
     screens: {
       sm: '640px',
