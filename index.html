@@ -13,18 +13,21 @@
 <body class="flex justify-center items-center bg-slate-100 min-h-screen text-slate-600">
   <div class=" bg-white p-6 rounded-t-[30px] rounded-l-[30px] rounded-br-[40%]">
     <form id="ageForm">
-      <div class="flex font-bold mb-2">
+      <div class="flex font-bold mb-2 text-xs">
         <div class="flex flex-col gap-1">
-          <label for="day"> DAY </label>
-          <input class="rounded-md border-[1px] border-slate-300 p-2 w-24 mr-2" type="text" id="day" name="day" placeholder="DD">
+          <label class="text-[10px]" id="ageLabel" for="day"> DAY </label>
+          <input class="rounded-md border-[0.5px] border-slate-300 focus:border-purple-400 focus:outline-none focus:caret-purple-400 p-2 w-24 mr-2 invalid:border-red-500" onChange="onChange(this)" min=1 max=31 type="number" id="day" name="day" placeholder="DD" required>
+          <span class="text-red-500 font-poppins-i text-[8px] invisible" id="ageError">Must be a valid day</span>
         </div>
         <div class="flex flex-col gap-1">
-          <label for="month"> MONTH </label>
-          <input class="rounded-md border-[1px] border-slate-300 p-2 w-24 mr-2" type="text" id="month" name="month" placeholder="MM">
+          <label class="text-[10px]" id="monthLabel" for="month"> MONTH </label>
+          <input class="rounded-md border-[0.5px] border-slate-300 focus:border-purple-400 focus:outline-none focus:caret-purple-400 p-2 w-24 mr-2  invalid:border-red-500" onChange="onChange(this)" min=1 max=31 type="number" id="month" name="month" placeholder="MM" required>
+          <span class="text-red-500 font-poppins-i text-[8px] invisible" id="monthError"> Must be a valid month</span>
         </div>
         <div class="flex flex-col gap-1">
-          <label for="year"> YEAR </label>
-          <input  class="rounded-md border-[1px] border-slate-300 p-2 w-24" type="text" id="year" name="year" placeholder="YYYY">
+          <label class="text-[10px]" id="yearLabel" for="year"> YEAR </label>
+          <input  class="rounded-md border-[0.5px] border-slate-300 focus:border-purple-400 focus:outline-none focus:caret-purple-400 p-2 w-24  invalid:border-red-500" onChange="onChange(this)" min=1900 type="number" id="year" name="year" placeholder="YYYY" required>
+          <span class="text-red-500 font-poppins-i text-[8px] invisible" id="yearError"> Must be in the past</span>
         </div>
       </div>
       <div class="flex items-center">
@@ -45,7 +48,17 @@
       Coded by <a href="#">Anne-Sophie S</a>.
     </div> -->
 
-
+    <!-- revoir taille et couleur text 
+    largeur / longeur content and marges 
+    
+        
+    add error message below input
+    On click on submit if invalid reset data 
+    
+    
+    then mobile version  -->
+    
+    
 
 <script>
   var dayInput = document.getElementById("day");
@@ -53,9 +66,49 @@
   var yearInput = document.getElementById("year");
   var form_el = document.getElementById("ageForm");
 
+  yearInput.max = new Date().getFullYear();
+
+    document.getElementById("ageLabel").style.color = dayInput.checkValidity() ? "#525252" : "#ef4444";
+    document.getElementById("ageError").style.visibility =  dayInput.checkValidity() ? "hidden" : "visible";
+
+    document.getElementById("monthLabel").style.color = monthInput.checkValidity() ? "#525252" : "#ef4444"
+    document.getElementById("monthError").style.visibility =  monthInput.checkValidity() ? "hidden" : "visible";
+
+    document.getElementById("yearLabel").style.color = yearInput.checkValidity() ? "#525252" : "#ef4444"
+    document.getElementById("yearError").style.visibility =  yearInput.checkValidity() ? "hidden" : "visible";
+
+  
+
+    const onChange = (e) => {
+      console.log(e.nextSibling.nextElementSibling)
+      if(e.checkValidity()) {
+        e.labels[0].style.color = "#525252"
+        e.nextSibling.nextElementSibling.style.visibility = "hidden";
+      } else {
+        e.labels[0].style.color = "#ef4444"
+        e.nextSibling.nextElementSibling.style.visibility = "visible";
+      }
+     
+    }
+    
+
+
   form_el.addEventListener("submit", function(evt) {
     evt.preventDefault();
+    if (yearInput.value == new Date().getFullYear()) {
+        monthInput.max = new Date().getMonth() +1 ;
+        if (monthInput.value == new Date().getMonth() + 1 ) {
+          dayInput.max = new Date().getDate();
+        }
+    }
+
+    if(monthInput.checkValidity() && dayInput.checkValidity() && yearInput.checkValidity()) {
       fillArray();
+    } else {
+      document.getElementById("dataAge").innerHTML = "--";
+    document.getElementById("dataMonth").innerHTML = "--";
+    document.getElementById("dataYear").innerHTML = "--";
+    }
 });
 
 function fillArray() {

@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       'poppins-r': ['Poppins-regular', 'sans-serif'],
+      'poppins-i': ['Poppins-italic'],
       'poppins-b': ['Poppins-bold'],
       'poppins-bi': ['Poppins-bolditalic'],
       'poppins-eb': ['Poppins-extrabold'],
